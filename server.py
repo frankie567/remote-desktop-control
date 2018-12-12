@@ -1,5 +1,4 @@
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
 from starlette.websockets import WebSocketDisconnect
 import json
 import logging
@@ -15,9 +14,11 @@ websockets = {
     'desktop': {},
 }
 
+
 async def receive_json(websocket):
     message = await websocket.receive_text()
     return json.loads(message)
+
 
 @app.websocket_route('/ws')
 async def websocket_endpoint(websocket):
@@ -28,7 +29,7 @@ async def websocket_endpoint(websocket):
     client_mode = message['client_mode']
     client_id = message['client_id']
     websockets[client_mode][client_id] = websocket
-    
+
     # Get mirror mode to broadcast messages to the client on the other side
     mirror_mode = 'web' if client_mode == 'desktop' else 'desktop'
 
