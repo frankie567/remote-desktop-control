@@ -25,26 +25,25 @@
                 return socket
             }
 
-            let socket
-
-            const disconnectSocket = () => {
-                if (socket) {
-                    socket.close()
-                    document.getElementById('status').textContent = `Disconnected`
-                    socket = null
-                }
+            const disconnectSocket = (socket) => {
+                socket.close()
+                document.getElementById('status').textContent = `Disconnected`
             }
 
             document.addEventListener("DOMContentLoaded", () => {
+                let socket
+
                 const form = document.getElementById('connect_form')
                 form.addEventListener('submit', (event) => {
                     event.preventDefault()
-                    disconnectSocket()
+                    if (socket) {
+                        disconnectSocket(socket)
+                    }
                     socket = createSocket(document.getElementById('client_id_input').value)
                 })
 
                 const disconnectButton = document.getElementById('disconnect_button')
-                disconnectButton.addEventListener('click', disconnectSocket)
+                disconnectButton.addEventListener('click', () => disconnectSocket(socket))
                 
                 const beepButton = document.getElementById('beep_button')
                 beepButton.addEventListener('click', () => socket.send(JSON.stringify({ event: 'beep' })))
@@ -54,7 +53,7 @@
     <body>
         <h1>Status: <span id="status">Disconnected</span></h1>
         <h1>Client ID: <span id="client_id">?</span></h1>
-        <h1>CPU usage:<span id="value">?</span></h1>
+        <h1>CPU usage: <span id="value">?</span>%</h1>
         <h1><button type="button" id="beep_button">Beep</button></h1>
         
         <form id="connect_form">
