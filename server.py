@@ -44,9 +44,13 @@ async def websocket_endpoint(websocket):
 
             try:
                 # Broadcast it to the mirror client
-                await websockets[mirror_mode][client_id].send_text(json.dumps(message))
+                await websockets[mirror_mode][client_id].send_text(
+                    json.dumps(message)
+                )
             except KeyError:
-                logger.debug(f'Client {client_id}[{mirror_mode}] not connected')
+                logger.debug(
+                    f'Client {client_id}[{mirror_mode}] not connected'
+                )
         except WebSocketDisconnect:
             break
 
