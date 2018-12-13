@@ -1,8 +1,10 @@
 # remote-desktop-control
 
-A websocket-based approach to control a desktop application through the web. More information and insights on the [related Medium post]().
+A websocket-based approach to control a desktop application through the web. More information and insights on the [related Medium post](https://medium.com/@fvoron/control-a-desktop-app-through-web-with-websockets-41626d949e3b).
 
 ## Try it yourself
+
+At least Python 3.6 is required.
 
 Clone the repository and install the Python dependencies:
 
